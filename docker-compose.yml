@@ -1,0 +1,64 @@
+services:
+
+  mysql-user:
+    image: mysql:8
+    container_name: mysql-user
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_db
+    ports:
+      - "3310:3306"
+
+  mysql-course:
+    image: mysql:8
+    container_name: mysql-course
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: course_db
+    ports:
+      - "3308:3306"
+
+  mysql-krs:
+    image: mysql:8
+    container_name: mysql-krs
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: krs_db
+    ports:
+      - "3309:3306"
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql-user
+
+  course-service:
+    build: ./course-service
+    container_name: course-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mysql-course
+
+  krs-service:
+    build: ./krs-service
+    container_name: krs-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - mysql-krs
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
