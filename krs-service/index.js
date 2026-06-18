@@ -7,12 +7,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-    host: "mysql-krs",
-    user: "root",
-    password: "root",
-    database: "krs_db"
-});
+if (process.env.NODE_ENV !== "test") {
+    db = mysql.createConnection({
+        host: "mysql-krs",
+        user: "root",
+        password: "root",
+        database: "krs_db"
+    });
+}
 
 app.get("/", (req,res)=>{
 
@@ -27,6 +29,12 @@ app.get("/", (req,res)=>{
             res.json(result);
         }
     );
+});
+
+app.get("/health", (req,res)=>{
+    res.status(200).json({
+        status:"ok"
+    });
 });
 
 app.post("/",(req,res)=>{
@@ -49,6 +57,4 @@ app.post("/",(req,res)=>{
     );
 });
 
-app.listen(3003,()=>{
-    console.log("KRS Service berjalan");
-});
+module.exports = app;

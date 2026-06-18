@@ -7,12 +7,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const db = mysql.createConnection({
-    host: "mysql-user",
-    user: "root",
-    password: "root",
-    database: "user_db"
-});
+let db;
+
+if (process.env.NODE_ENV !== "test") {
+    db = mysql.createConnection({
+        host: "mysql-user",
+        user: "root",
+        password: "root",
+        database: "user_db"
+    });
+}
 
 app.get("/", (req,res)=>{
 
@@ -28,6 +32,12 @@ app.get("/", (req,res)=>{
         }
     );
 
+});
+
+app.get("/health", (req,res)=>{
+    res.status(200).json({
+        status:"ok"
+    });
 });
 
 app.post("/", (req,res)=>{
@@ -51,6 +61,4 @@ app.post("/", (req,res)=>{
 
 });
 
-app.listen(3001,()=>{
-    console.log("User Service berjalan");
-});
+module.exports = app;
