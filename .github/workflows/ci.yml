@@ -13,7 +13,6 @@ jobs:
 test-user-service:
 runs-on: ubuntu-latest
 
-```
 defaults:
   run:
     working-directory: user-service
@@ -28,12 +27,10 @@ steps:
   - run: npm install
 
   - run: npm test
-```
 
 test-course-service:
 runs-on: ubuntu-latest
 
-```
 defaults:
   run:
     working-directory: course-service
@@ -48,18 +45,17 @@ steps:
   - run: npm install
 
   - run: npm test
-```
 
 test-krs-service:
 runs-on: ubuntu-latest
 
-```
 defaults:
   run:
     working-directory: krs-service
 
 steps:
   - uses: actions/checkout@v4
+
   - uses: actions/setup-node@v4
     with:
       node-version: 20
@@ -67,4 +63,4 @@ steps:
   - run: npm install
 
   - run: npm test
-```
+
