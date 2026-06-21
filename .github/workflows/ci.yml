@@ -28,6 +28,9 @@ jobs:
 
       - run: npm test
 
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
   test-course-service:
     runs-on: ubuntu-latest
 
@@ -46,6 +49,9 @@ jobs:
 
       - run: npm test
 
+      - name: Security Audit
+        run: npm audit --audit-level=high
+
   test-krs-service:
     runs-on: ubuntu-latest
 
@@ -63,3 +69,6 @@ jobs:
       - run: npm install
 
       - run: npm test
+
+      - name: Security Audit
+        run: npm audit --audit-level=high
